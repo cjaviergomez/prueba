@@ -1,0 +1,43 @@
+<div class="card animated fadeInLeft mt-5 br-15" style="max-width: 18rem;margin: 0 auto;">
+  <form #formIngreso="ngForm" (ngSubmit)="onSubmit(formIngreso)" novalidate="" class="form-signin">
+     <h1 class="h3 font-weight-normal text-center">Iniciar sesión</h1>
+     <label for="correo" class="sr-only">Correo</label>
+     <input type="email"
+           id="correo"
+           #correo="ngModel"
+           name="correo"
+           [(ngModel)]="usuario.correo"
+           [ngClass]="{'is-invalid': formIngreso.submitted && formIngreso.controls['correo'].errors }"
+           class="form-control"
+           placeholder="Correo" required autofocus>
+     <div class="invalid-feedback animated fadeIn" *ngIf="formIngreso.submitted && formIngreso.controls['correo'].errors">
+                 Introduce un correo válido.
+     </div>
+
+     <div class="input-group mt-2">
+       <input type="password"
+             id="inputPassword"
+             #inputPassword="ngModel"
+             name="password"
+             [(ngModel)]="usuario.password"
+             [ngClass]="{'is-invalid': formIngreso.submitted && ((formIngreso.controls['password'] && formIngreso.controls['password'].errors) || (formIngreso.controls['password2'] && formIngreso.controls['password2'].errors))}"
+             minlength="6"
+             maxlength="40"
+             class="form-control"
+             placeholder="Contraseña"
+             required>
+
+       <div class="invalid-feedback animated fadeIn" *ngIf="formIngreso.submitted && ((formIngreso.controls['password'] && formIngreso.controls['password'].errors) || (formIngreso.controls['password2'] && formIngreso.controls['password2'].errors))">
+         Introduce al menos 6 caracteres.
+       </div>
+     </div>
+
+     <button class="btn btn-lg btn-danger btn-block mt-2" type="submit">Ingresar</button>
+
+     <div class="pt-4 text-center">
+      <a routerLink="/registro">¿No tienes cuenta?</a>
+    </div>
+
+   </form>
+ </div>
+

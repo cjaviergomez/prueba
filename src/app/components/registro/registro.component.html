@@ -1,0 +1,56 @@
+<div class="card animated fadeInRight mt-5 br-15" style="max-width: 18rem;margin: 0 auto;">
+  <form #formRegistro="ngForm" (ngSubmit)="onSubmit(formRegistro)" novalidate="" class="form-signin">
+    <h1 class="h3 font-weight-normal text-center">Registrarse</h1>
+
+    <label for="inputNombres" class="sr-only">Nombre</label>
+    <input type="text"
+          #inputNombres="ngModel"
+          name="inputNombres"
+          [(ngModel)]="usuario.nombres"
+          [ngClass]="{'is-invalid': formRegistro.submitted && formRegistro.controls['inputNombres'].errors }"
+          id="inputNombres"
+          class="form-control mt-3"
+          minlength="10"
+          maxlength="40"
+          pattern="[A-Z a-z]+"
+          placeholder="Nombre Completo" required autofocus>
+    <div class="invalid-feedback animated fadeIn" *ngIf="formRegistro.submitted && formRegistro.controls['inputNombres'].errors">
+            Introduce un nombre válido.
+    </div>
+
+    <label for="correo" class="sr-only">Correo</label>
+    <input type="email"
+          id="correo"
+          #correo="ngModel"
+          name="correo"
+          [(ngModel)]="usuario.correo"
+          [ngClass]="{'is-invalid': formRegistro.submitted && formRegistro.controls['correo'].errors }"
+          class="form-control mt-2"
+          maxlength="50"
+          placeholder="Correo" required>
+    <div class="invalid-feedback animated fadeIn" *ngIf="formRegistro.submitted && formRegistro.controls['correo'].errors">
+                    Introduce un correo válido.
+    </div>
+
+    <label for="inputPassword" class="sr-only">Contraseña</label>
+    <input type="password"
+          id="inputPassword"
+          #inputPassword="ngModel"
+          name="password"
+          [(ngModel)]="usuario.password"
+          [ngClass]="{'is-invalid': formRegistro.submitted && formRegistro.controls['password'].errors}"
+          class="form-control mt-2"
+          minlength="6"
+          maxlength="40"
+          placeholder="Contraseña" required>
+    <div class="invalid-feedback animated fadeIn" *ngIf="formRegistro.submitted && formRegistro.controls['password'].errors">
+              Introduce al menos 6 caracteres.
+    </div>
+
+    <button class="btn btn-lg btn-danger btn-block mt-2" type="submit">CREAR CUENTA</button>
+
+    <div class="pt-4 text-center">
+      <a routerLink="/login">¿Ya tienes cuenta?</a>
+    </div>
+  </form>
+</div>
