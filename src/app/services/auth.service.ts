@@ -24,7 +24,7 @@ export class AuthService {
   addUsuario(usuario: Usuario): boolean {
     let isAdd: boolean;
     if (this.usuarios.length >= 1 ) {
-      this.usuarios.forEach( function (value: Usuario) {
+      this.usuarios.forEach( function(value: Usuario) {
         if (value.correo === usuario.correo) {
           isAdd = true;
         }
@@ -46,7 +46,7 @@ export class AuthService {
   login(usuario: Usuario) {
     let checkInfo = false;
     if (this.usuarios.length >= 1) {
-      this.usuarios.forEach( function (value: Usuario) {
+      this.usuarios.forEach( function(value: Usuario) {
         if (value.correo === usuario.correo && value.password === usuario.password) {
           checkInfo = true;
         }
@@ -80,5 +80,76 @@ export class AuthService {
 
   estaAutenticado(): boolean {
     return this.token.length > 1;
+  }
+
+  getUsuario(): Usuario {
+    let usuario = this.usuario;
+    const correo = localStorage.getItem('token');
+    if (this.usuarios.length >= 1) {
+      this.usuarios.forEach( function(value: Usuario) {
+        if (value.correo === correo) {
+          usuario = value;
+        }
+      });
+    }
+    return usuario;
+  }
+
+  updateHeroesUser(heroe, flat: string): boolean {
+    const correo = localStorage.getItem('token');
+    let i: number;
+    let iHeroes: number;
+    let exist = false;
+    if (this.usuarios.length >= 1 ) {
+      this.usuarios.forEach( function(value: Usuario, index) {
+        if (value.correo === correo) {
+          i = index;
+        }
+      });
+
+      if (i >= 0 && flat === 'heroes') {
+        this.usuarios[i].heroes.forEach(function(value: any) {
+          if (value.id === heroe.id) {
+            console.log('Ya existe');
+            exist = true;
+          }
+        });
+
+        if (exist) {
+          return false;
+        } else {
+          this.usuarios[i].heroes.push(heroe);
+          localStorage.setItem('usuarios', JSON.stringify(this.usuarios));
+          return true;
+        }
+      } else if (i >= 0 && flat === 'heroesPanel') {
+        this.usuarios[i].heroesPanel.forEach(function(value: any) {
+          if (value.id === heroe.id) {
+            exist = true;
+          }
+        });
+
+        if (exist) {
+          return false;
+        } else {
+          this.usuarios[i].heroesPanel.push(heroe);
+          localStorage.setItem('usuarios', JSON.stringify(this.usuarios));
+          return true;
+        }
+      } else if (i >= 0 && flat === 'delete') {
+        this.usuarios[i].heroesPanel.forEach(function(value: any, index) {
+          if (value.id === heroe.id) {
+            iHeroes = index;
+          }
+        });
+        if (iHeroes >= 0) {
+          this.usuarios[i].heroesPanel.splice(iHeroes, 1);
+          localStorage.setItem('usuarios', JSON.stringify(this.usuarios));
+          return true;
+        }
+      } else {
+        return false;
+      }
+    }
   }
 }

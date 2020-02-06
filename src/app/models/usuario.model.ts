@@ -4,7 +4,10 @@ export class Usuario {
   correo?: string;
   password?: string;
   heroes?: [];
+  heroesPanel?: [];
+
   constructor() {
     this.heroes = [];
+    this.heroesPanel = [];
   }
 }

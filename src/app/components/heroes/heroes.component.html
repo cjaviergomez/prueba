@@ -1,7 +1,21 @@
-<div class="container mt-3">
+<div class="mt-3 p-3 mr-5">
   <div class="row">
+
     <div class="col-2">
-      1 of 3
+      <div *ngIf="heroesPanel.length > 0"
+              class="table mt-3 animated fadeIn faster animated fadeIn faster container ml-3">
+        <div *ngFor="let heroe of heroesPanel">
+          <img [src]=" heroe | heroeImagen" class="card-img-top imgPanel" [alt]="heroe.name" (click)="abrirModal(heroe)">
+          <hr>
+        </div>
+      </div>
+
+      <div *ngIf="heroesPanel.length === 0" class="alert alert-danger text-center mt-3 animated fadeIn faster tamTotal">
+        <p class="alert-danger">No hay super heroes agregados al panel</p>
+          <p>
+            <fa-icon [icon]="faExclamation" size="3x"></fa-icon>
+          </p>
+      </div>
     </div>
 
 
@@ -29,11 +43,11 @@
         <div class="col mt-3 m-0 p-0">
           <button type="button"
                   (click)="buscarHeroe()"
-                  class="btn btn-danger"> <fa-icon [icon]="faSearch"></fa-icon>
+                  class="btn btn-danger"><fa-icon [icon]="faSearch"></fa-icon>
           </button>
         </div>
         <div *ngIf="cargando"
-              class="alert alert-danger text-center mt-3 animated fadeIn faster container">
+              class="alert alert-danger text-center mt-3 animated fadeIn faster container ml-3">
           <h4 class="alert-danger">Cargando</h4>
           <p>
             <fa-icon [icon]="faSyncAlt" [spin]="true" size="2x"></fa-icon>
@@ -43,18 +57,72 @@
           </p>
         </div>
         <div *ngIf="!cargando && heroes.length === 0"
-              class="alert alert-danger text-center mt-3 animated fadeIn faster container">
+              class="alert alert-danger text-center mt-3 animated fadeIn faster container ml-3">
           <h4 class="alert-danger">No se encontraron super heroes</h4>
           <p>
             <fa-icon [icon]="faExclamation" size="3x"></fa-icon>
           </p>
         </div>
         <table *ngIf="!cargando && heroes.length > 0"
-          class="table mt-3 animated fadeIn faster animated fadeIn faster container">
+          class="table mt-3 animated fadeIn faster animated fadeIn faster container ml-3">
           <tbody>
             <tr *ngFor="let heroe of heroes; let i = index">
               <th> <img [src]=" heroe | heroeImagen" class="card-img-top" [alt]="heroe.name"> </th>
-              <td> eroe</td>
+              <td>
+                <h4>
+                  {{ heroe.name }} <br>
+                </h4>
+                <p *ngIf="heroe.description.length > 0">
+                  {{ heroe.description }} <br>
+                </p>
+                <span *ngIf="heroe.comics.items.length > 0" class="badge badge-danger"> Comics: <br></span>
+                <span *ngFor="let comic of heroe.comics.items; let i = index">
+                  <span class="badge badge-light mr-1" *ngIf="i < 5">{{ comic.name }}</span>
+                </span> <br>
+                <button type="button" class="btn btn-outline-danger btn-sm mt-3" (click)="guardarHeroe(heroe)">
+                  <fa-icon [icon]="faSave"></fa-icon>
+                  Guardar
+                </button>
+
+              </td>
+
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <div class="row" *ngIf="pagina===2">
+
+        <div *ngIf="heroesUser.length === 0"
+              class="alert alert-danger text-center mt-3 animated fadeIn faster container ml-3">
+          <h4 class="alert-danger">No se han guardado super heroes</h4>
+          <p>
+            <fa-icon [icon]="faExclamation" size="3x"></fa-icon>
+          </p>
+        </div>
+        <table *ngIf="heroesUser.length > 0"
+          class="table mt-3 animated fadeIn faster animated fadeIn faster container ml-3">
+          <tbody>
+            <tr *ngFor="let heroe of heroesUser; let i = index">
+              <th> <img [src]=" heroe | heroeImagen" class="card-img-top" [alt]="heroe.name"> </th>
+              <td>
+                <h4>
+                  {{ heroe.name }} <br>
+                </h4>
+                <p *ngIf="heroe.description.length > 0">
+                  {{ heroe.description }} <br>
+                </p>
+                <span *ngIf="heroe.comics.items.length > 0" class="badge badge-danger"> Comics: <br></span>
+                <span *ngFor="let comic of heroe.comics.items; let i = index">
+                  <span class="badge badge-light mr-1" *ngIf="i < 5">{{ comic.name }}</span>
+                </span> <br>
+                <button type="button" class="btn btn-outline-danger btn-sm mt-3 mr-1" (click)="agregarAlPanel(heroe)">
+                  <fa-icon [icon]="faPlus" title="Agregar al panel"></fa-icon>
+                </button>
+                <button type="button" class="btn btn-outline-danger btn-sm mt-3" (click)="eliminarDelPanel(heroe)">
+                  <fa-icon [icon]="faMinus" title="Eliminar del panel"></fa-icon>
+                </button>
+              </td>
 
             </tr>
           </tbody>
@@ -63,5 +131,39 @@
 
     </div>
 
+  </div>
+</div>
+
+
+<!--Modal heroe-->
+<div class="modal fade" id="Modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content text-center">
+      <div class="modal-body">
+        <div class="row user-details">
+
+          <div class="col-12 mt-2" *ngIf="heroe">
+            <div>
+              <img [src]=" heroe | heroeImagen" class="rounded-circle img-thumbnail" alt="profile">
+              <h5>{{ heroe.name }}</h5>
+              <hr>
+            </div>
+            <div *ngIf="heroe.description.length > 0">
+              <p> {{ heroe.description }}</p>
+              <hr>
+            </div>
+            <div *ngIf="heroe.comics.items.length > 0">
+              <span class="badge badge-danger"> Comics </span> <br>
+              <span *ngFor="let comic of heroe.comics.items; let i = index">
+                <span class="badge badge-light mr-1" *ngIf="i < 5">{{ comic.name }}</span>
+              </span>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-outline-danger btn-block" data-dismiss="modal">Cerrar</button>
+      </div>
+    </div>
   </div>
 </div>

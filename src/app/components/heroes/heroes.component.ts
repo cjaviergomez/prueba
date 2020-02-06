@@ -1,11 +1,14 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
+declare var $: any;
 // Icono
-import { faSearch, faExclamation, faSyncAlt } from '@fortawesome/free-solid-svg-icons';
+import { faSearch, faExclamation, faSyncAlt, faSave, faPlus, faMinus } from '@fortawesome/free-solid-svg-icons';
 
 // Services
 import { HeroesService } from '../../services/heroes.service';
+import { AuthService } from '../../services/auth.service';
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-heroes',
@@ -17,17 +20,25 @@ export class HeroesComponent implements OnInit, OnDestroy {
   faSearch = faSearch; // Icono de busqueda.
   faExclamation = faExclamation; // Icono de exclamación.
   faSyncAlt = faSyncAlt; // Icono que da vueltas al cargar.
+  faSave = faSave; // Icono de guardar
+  faPlus = faPlus; // Icono de más ( + )
+  faMinus = faMinus; // Icono de menos ( - )
 
   buscar: string;
   pagina: number;
-  heroes: [] = [];
+  heroe;
+  heroes: [] = []; // Array de heroes traidos de la API
+  heroesUser: [] = []; // Array de heroes guardados del usuario.
+  heroesPanel: [] = []; // Array los heroes a mostrar en el panel.
   private ngUnsubscribe: Subject<any> = new Subject<any>();
   cargando: boolean;
 
-  constructor(public hs: HeroesService) { }
+  constructor(private hs: HeroesService, private auth: AuthService) { }
 
   ngOnInit() {
     this.pagina = 1;
+    this.heroesUser = this.auth.getUsuario().heroes;
+    this.heroesPanel = this.auth.getUsuario().heroesPanel;
   }
 
   buscarHeroe() {
@@ -42,6 +53,46 @@ export class HeroesComponent implements OnInit, OnDestroy {
           this.cargando = false;
           console.log(data);
     });
+  }
+
+  guardarHeroe(heroe: never) {
+
+    Swal.fire({
+      allowOutsideClick: false,
+      icon: 'info',
+      text: 'Espere por favor...'
+    });
+    Swal.showLoading(); // Iniciamos el loading.
+    if (this.auth.updateHeroesUser(heroe, 'heroes')) {
+
+      Swal.close();
+      Swal.fire({
+        icon: 'success',
+        title: 'Guardado',
+        text: 'Heroe guardado correctamente'
+      });
+    } else {
+      Swal.close();
+      Swal.fire({
+        icon: 'error',
+        title: 'Error',
+        text: 'El heroe ya fue agregado antes.'
+      });
+    }
+  }
+
+  agregarAlPanel(heroe: never) {
+    this.auth.updateHeroesUser(heroe, 'heroesPanel');
+  }
+
+  eliminarDelPanel(heroe: never) {
+    this.auth.updateHeroesUser(heroe, 'delete');
+  }
+
+  abrirModal(heroe) {
+    this.heroe = heroe;
+    console.log(this.heroe);
+    $('#Modal').modal('show');
   }
 
   /**

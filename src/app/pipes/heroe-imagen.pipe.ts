@@ -8,7 +8,7 @@ export class HeroeImagenPipe implements PipeTransform {
   transform(heroe: any): any {
 
     if (heroe.thumbnail.path) {
-      return heroe.thumbnail.path + '.jpg';
+      return heroe.thumbnail.path + '.' + heroe.thumbnail.extension;
     } else {
       return '../../assets/img/no-image.png';
     }
