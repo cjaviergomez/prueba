@@ -70,14 +70,16 @@ export class HeroesComponent implements OnInit, OnDestroy {
       Swal.fire({  // Mostramos mensaje de exito
         icon: 'success',
         title: 'Guardado',
-        text: 'Heroe guardado correctamente'
+        text: 'Heroe guardado correctamente',
+        confirmButtonColor: '#d33'
       });
     } else {
       Swal.close(); // Cerramos el loading
       Swal.fire({   // Mostramos mensaje de error
         icon: 'error',
         title: 'Error',
-        text: 'El heroe ya fue agregado antes.'
+        text: 'El heroe ya fue agregado antes.',
+        confirmButtonColor: '#d33'
       });
     }
   }

@@ -31,14 +31,16 @@ export class RegistroComponent {
       Swal.fire({
         icon: 'success',
         title: 'Éxito',
-        text: 'Registro exitoso'
+        text: 'Registro exitoso',
+        confirmButtonColor: '#d33'
       });
     } else {
       Swal.close();
       Swal.fire({
         icon: 'error',
         title: 'Error',
-        text: 'El correo ya esta en uso. Por favor inicie sesión.'
+        text: 'El correo ya esta en uso. Por favor inicie sesión.',
+        confirmButtonColor: '#d33'
       });
     }
 

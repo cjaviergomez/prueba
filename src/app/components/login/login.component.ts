@@ -9,7 +9,6 @@ import { Usuario } from '../../models/usuario.model';
 // Services
 import { AuthService } from '../../services/auth.service';
 
-
 @Component({
   selector: 'app-login',
   templateUrl: './login.component.html',
@@ -38,7 +37,8 @@ export class LoginComponent {
       Swal.fire({
         icon: 'error',
         title: 'Error',
-        text: 'Datos incorrectos'
+        text: 'Datos incorrectos',
+        confirmButtonColor: '#d33'
       });
     }
   }
