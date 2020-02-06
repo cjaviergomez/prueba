@@ -1,7 +1,9 @@
 <div class="mt-3 p-3 mr-5">
   <div class="row">
 
+    <!--Panel izquierdo-->
     <div class="col-2">
+      <!--Se evalue si el usuario tiene heroes agregados al panel-->
       <div *ngIf="heroesPanel.length > 0"
               class="table mt-3 animated fadeIn faster animated fadeIn faster container ml-3">
         <div *ngFor="let heroe of heroesPanel">
@@ -9,27 +11,28 @@
           <hr>
         </div>
       </div>
-
+      <!--Si el usuario no tiene heroes agregados al panel-->
       <div *ngIf="heroesPanel.length === 0" class="alert alert-danger text-center mt-3 animated fadeIn faster tamTotal">
-        <p class="alert-danger">No hay super heroes agregados al panel</p>
+        <p class="alert-danger">No hay super héroes agregados al panel</p>
           <p>
             <fa-icon [icon]="faExclamation" size="3x"></fa-icon>
           </p>
       </div>
     </div>
 
-
+    <!--Panel central-->
     <div class="col-10">
 
       <button type="button"
               (click)="pagina=1"
               [ngClass]="{'active': pagina===1}"
-              class="btn btn-outline-danger mr-2">Buscar heroe</button>
+              class="btn btn-outline-danger mr-2">Buscar héroes</button>
       <button type="button"
               (click)="pagina=2"
               [ngClass]="{'active': pagina===2}"
-              class="btn btn-outline-danger">Ver heroes guardados</button>
+              class="btn btn-outline-danger">Ver héroes guardados</button>
 
+      <!--Página de buscar héroes-->
       <div class="row" *ngIf="pagina===1">
         <div class="col-md-10">
           <div class="form-group mt-3">
@@ -46,6 +49,8 @@
                   class="btn btn-danger"><fa-icon [icon]="faSearch"></fa-icon>
           </button>
         </div>
+
+        <!--Mostrar mientras se cargan los datos de los héroes-->
         <div *ngIf="cargando"
               class="alert alert-danger text-center mt-3 animated fadeIn faster container ml-3">
           <h4 class="alert-danger">Cargando</h4>
@@ -56,16 +61,21 @@
             Espere por favor
           </p>
         </div>
+
+        <!--Si no se encontraron héroes-->
         <div *ngIf="!cargando && heroes.length === 0"
               class="alert alert-danger text-center mt-3 animated fadeIn faster container ml-3">
-          <h4 class="alert-danger">No se encontraron super heroes</h4>
+          <h4 class="alert-danger">No se encontraron super héroes</h4>
           <p>
             <fa-icon [icon]="faExclamation" size="3x"></fa-icon>
           </p>
         </div>
+
+        <!--Mostrar los héroes encontrados-->
         <table *ngIf="!cargando && heroes.length > 0"
-          class="table mt-3 animated fadeIn faster animated fadeIn faster container ml-3">
+                class="table mt-3 animated fadeIn faster animated fadeIn faster container ml-3">
           <tbody>
+            <!--Se recorre el arreglo de los heroes encontrados y se muestra su información-->
             <tr *ngFor="let heroe of heroes; let i = index">
               <th> <img [src]=" heroe | heroeImagen" class="card-img-top" [alt]="heroe.name"> </th>
               <td>
@@ -75,7 +85,8 @@
                 <p *ngIf="heroe.description.length > 0">
                   {{ heroe.description }} <br>
                 </p>
-                <span *ngIf="heroe.comics.items.length > 0" class="badge badge-danger"> Comics: <br></span>
+                <span *ngIf="heroe.comics.items.length > 0" class="badge badge-danger"> Comics </span>
+                <br>
                 <span *ngFor="let comic of heroe.comics.items; let i = index">
                   <span class="badge badge-light mr-1" *ngIf="i < 5">{{ comic.name }}</span>
                 </span> <br>
@@ -83,16 +94,16 @@
                   <fa-icon [icon]="faSave"></fa-icon>
                   Guardar
                 </button>
-
               </td>
-
             </tr>
           </tbody>
         </table>
       </div>
 
+      <!--Pagina de ver heroes guardados-->
       <div class="row" *ngIf="pagina===2">
 
+        <!--Si el usuario no ha guardado héroes en el panel izquierdo-->
         <div *ngIf="heroesUser.length === 0"
               class="alert alert-danger text-center mt-3 animated fadeIn faster container ml-3">
           <h4 class="alert-danger">No se han guardado super heroes</h4>
@@ -100,9 +111,12 @@
             <fa-icon [icon]="faExclamation" size="3x"></fa-icon>
           </p>
         </div>
+
+        <!--Si el usuario ha guardado héroes en el panel izquierdo-->
         <table *ngIf="heroesUser.length > 0"
-          class="table mt-3 animated fadeIn faster animated fadeIn faster container ml-3">
+                class="table mt-3 animated fadeIn faster animated fadeIn faster container ml-3">
           <tbody>
+            <!--Se recorre el arreglo de los heroes guardados en el panel y se muestra su información-->
             <tr *ngFor="let heroe of heroesUser; let i = index">
               <th> <img [src]=" heroe | heroeImagen" class="card-img-top" [alt]="heroe.name"> </th>
               <td>
@@ -112,7 +126,8 @@
                 <p *ngIf="heroe.description.length > 0">
                   {{ heroe.description }} <br>
                 </p>
-                <span *ngIf="heroe.comics.items.length > 0" class="badge badge-danger"> Comics: <br></span>
+                <span *ngIf="heroe.comics.items.length > 0" class="badge badge-danger"> Comics </span>
+                <br>
                 <span *ngFor="let comic of heroe.comics.items; let i = index">
                   <span class="badge badge-light mr-1" *ngIf="i < 5">{{ comic.name }}</span>
                 </span> <br>

@@ -6,9 +6,9 @@ import { Component } from '@angular/core';
   styleUrls: ['./footer.component.css']
 })
 export class FooterComponent {
-  public anio:number;
+  public anio: number;
 
-	constructor(){
-    this.anio = new Date().getFullYear();
-	}
+  constructor() {
+    this.anio = new Date().getFullYear(); // Se obtiene el año actual.
+  }
 }

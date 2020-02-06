@@ -13,6 +13,8 @@ export class HeroesService {
 
   constructor(private http: HttpClient) { }
 
+  // Metodo para obtener heroes desde la API
+  // params: texto de los heroes que su nombre comiencen por dicho texto
   getCharacters(text: string): Observable<any> {
     const url = `${ this.URL_API }?nameStartsWith=${ text }&apikey=${ this.PUBLIC_KEY }`;
     return this.http.get<any>(url)

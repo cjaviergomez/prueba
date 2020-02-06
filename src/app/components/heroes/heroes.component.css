@@ -1,13 +1,16 @@
+/* Se define el tamaño de las imagenes de los heroes buscados.*/
 img{
   width: 200px;
   height: 200px;
 }
 
+/* Clase que va a tener las imagenes del panel izquierdo */
 .imgPanel {
   width: 100%;
   height: 100px;
 }
 
+/* Tamaño del panel izquierdo */
 .tamTotal {
   height: 481px;
 }

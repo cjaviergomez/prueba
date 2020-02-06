@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 import { Router } from '@angular/router';
 
 // Services
@@ -9,26 +9,14 @@ import { AuthService } from '../../services/auth.service';
   templateUrl: './navbar.component.html',
   styleUrls: ['./navbar.component.css']
 })
-export class NavbarComponent implements OnInit {
+export class NavbarComponent {
 
-  islogin: boolean;
+  constructor(public auth: AuthService, private router: Router) { }
 
-  constructor(private auth: AuthService, private router: Router) { }
-
-  ngOnInit() {
-    this.leerToken();
-  }
-
-  leerToken() {
-    this.islogin = false;
-    if (this.auth.leerToken() !== '') {
-      this.islogin = true;
-    }
-  }
+  // Metodo para cerrar sesión de un usuario.
   salir() {
     this.auth.logout();
     this.router.navigate(['/login']);
-
   }
 
 }

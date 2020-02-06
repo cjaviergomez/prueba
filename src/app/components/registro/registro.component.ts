@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 
 import Swal from 'sweetalert2';
 // Models
@@ -11,14 +11,11 @@ import { AuthService } from '../../services/auth.service';
   templateUrl: './registro.component.html',
   styleUrls: ['./registro.component.css', '../login/login.component.css']
 })
-export class RegistroComponent implements OnInit {
+export class RegistroComponent {
 
   public usuario: Usuario = new Usuario();
 
   constructor(private auth: AuthService) { }
-
-  ngOnInit() {
-  }
 
   onSubmit(form: NgForm) {
     if (form.invalid) { return; }

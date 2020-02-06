@@ -1,5 +1,7 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
+
+// Guard
 import { AuthGuard } from './guards/auth.guard';
 
 // Componentes
@@ -9,11 +11,11 @@ import { HeroesComponent } from './components/heroes/heroes.component';
 
 
 const routes: Routes = [
-  { path: '', redirectTo: '/login', pathMatch: 'full'},
+  { path: '', redirectTo: '/registro', pathMatch: 'full'},
   { path: 'login', component: LoginComponent},
   { path: 'registro', component: RegistroComponent},
-  { path: 'heroes', component: HeroesComponent, canActivate:[AuthGuard]}
-
+  { path: 'heroes', component: HeroesComponent, canActivate: [AuthGuard]},
+  { path: '**', redirectTo: '/login', pathMatch: 'full' } // Si no existe la ruta se redirije al login
 ];
 
 @NgModule({

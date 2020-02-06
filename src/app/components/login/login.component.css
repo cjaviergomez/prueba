@@ -13,6 +13,7 @@ body {
   background-color: #f5f5f5;
 }
 
+/* Estilos para el formulario de inicio de sesión */
 .form-signin {
   width: 100%;
   max-width: 330px;
@@ -20,9 +21,7 @@ body {
   margin: auto;
   margin-top: 10px;
 }
-.form-signin .checkbox {
-  font-weight: 400;
-}
+
 .form-signin .form-control {
   position: relative;
   box-sizing: border-box;
@@ -43,37 +42,6 @@ body {
   border-top-left-radius: 0;
   border-top-right-radius: 0;
 }
-
-.bd-placeholder-img {
-  font-size: 1.125rem;
-  text-anchor: middle;
-  -webkit-user-select: none;
-  -moz-user-select: none;
-  -ms-user-select: none;
-  user-select: none;
-}
-
-@media (min-width: 768px) {
-  .bd-placeholder-img-lg {
-    font-size: 3.5rem;
-  }
-}
-
-.flex-sb-m {
-	display: -webkit-box;
-	display: -webkit-flex;
-	display: -moz-box;
-	display: -ms-flexbox;
-	display: flex;
-	justify-content: space-between;
-	-ms-align-items: center;
-	align-items: center;
-}
-
-.w-full {width: 100%;}
-.p-t-3 {padding-top: 3px;}
-.p-l-25 {padding-left: 25px;}
-.p-b-24 {padding-bottom: 24px;}
 
 a {
   text-decoration: none;

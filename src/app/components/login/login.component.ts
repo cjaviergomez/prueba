@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 import { NgForm } from '@angular/forms';
 import Swal from 'sweetalert2';
 import { Router } from '@angular/router';
@@ -15,25 +15,22 @@ import { AuthService } from '../../services/auth.service';
   templateUrl: './login.component.html',
   styleUrls: ['./login.component.css']
 })
-export class LoginComponent implements OnInit {
+export class LoginComponent {
 
   public usuario: Usuario = new Usuario();
 
   constructor(private auth: AuthService, private router: Router) { }
 
-  ngOnInit() {
-  }
-
+  // Metodo para loguearse
   onSubmit(form: NgForm){
     if (form.invalid) { return; }
-
     Swal.fire({
       allowOutsideClick: false,
       icon: 'info',
       text: 'Espere por favor...'
     });
     Swal.showLoading(); // Iniciamos el loading.
-    if (this.auth.login(this.usuario)) {
+    if (this.auth.login(this.usuario)) { // Si se loguea correctamente se redireje a la página de héroes
       Swal.close();
       this.router.navigate(['/heroes']);
     } else {
