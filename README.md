@@ -7,10 +7,10 @@ This project was generated with [Angular CLI](https://github.com/angular/angular
 ## Observaciones
 Para reproducir este proyecto se deben de cumplir los siguientes requisitos: 
 
-- contar con un IDE
+- Contar con un IDE
 - Tener instalado Node.js
 - Y contrar con Angular CLI
-En el siguiente enlace encontraran los requisitos que se deben cumplir para poder trabajar con Angular:
+En el siguiente enlace encontraran los requisitos que se deben cumplir para poder trabajar con Angular 8:
 `https://openwebinars.net/blog/instalacion-angular-8-requisitos/`
 
 ## Instrucciones
